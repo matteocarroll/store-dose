@@ -40,66 +40,46 @@ export default function Home() {
     setSelectedId(store.id)
   }
 
-  const selectedStore = stores.find((s) => s.id === selectedId)
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
-        overflow: 'hidden',
-      }}
-    >
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden', background: '#f9f9f9' }}>
+
       {/* Header */}
-      <header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 24px',
-          height: '52px',
-          borderBottom: '1.5px solid #000',
-          flexShrink: 0,
-          background: '#fff',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-          <span
-            style={{
-              fontSize: '14px',
-              fontWeight: 700,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-            }}
-          >
+      <header style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 24px',
+        height: '58px',
+        flexShrink: 0,
+        background: '#fff',
+        boxShadow: '0 1px 0 #ebebeb',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a1a', letterSpacing: '-0.01em' }}>
             Store Dose
           </span>
-          <span
-            style={{
-              fontSize: '11px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: '#666',
-            }}
-          >
-            {loading ? '—' : `${stores.length} ${stores.length === 1 ? 'Store' : 'Stores'}`}
+          <span style={{
+            fontSize: '11px',
+            color: '#aaa',
+            background: '#f4f4f4',
+            padding: '2px 8px',
+            borderRadius: '20px',
+          }}>
+            {loading ? '—' : stores.length}
           </span>
         </div>
 
         <button
           onClick={() => setShowModal(true)}
           style={{
-            padding: '7px 16px',
-            background: '#000',
+            padding: '8px 18px',
+            background: '#1a1a1a',
             color: '#fff',
-            border: '1.5px solid #000',
-            fontSize: '11px',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            fontWeight: 700,
+            border: 'none',
+            fontSize: '13px',
+            fontWeight: 600,
             cursor: 'pointer',
-            borderRadius: 0,
+            borderRadius: '8px',
           }}
         >
           + Add Store
@@ -107,54 +87,19 @@ export default function Home() {
       </header>
 
       {/* Main */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', gap: '0' }}>
+
         {/* Map */}
-        <div
-          style={{
-            flex: '0 0 60%',
-            position: 'relative',
-            borderRight: '1.5px solid #000',
-          }}
-        >
-          <StoreMap
-            stores={stores}
-            selectedId={selectedId}
-            onSelectStore={handleSelectStore}
-          />
+        <div style={{ flex: '0 0 60%', position: 'relative' }}>
+          <StoreMap stores={stores} selectedId={selectedId} onSelectStore={handleSelectStore} />
         </div>
 
         {/* Sidebar */}
-        <div
-          style={{
-            flex: '0 0 40%',
-            overflowY: 'auto',
-            background: '#fff',
-          }}
-        >
+        <div style={{ flex: '0 0 40%', overflowY: 'auto', background: '#fff', boxShadow: '-1px 0 0 #ebebeb' }}>
           {loading ? (
-            <div
-              style={{
-                padding: '32px 24px',
-                fontSize: '11px',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: '#999',
-              }}
-            >
-              Loading...
-            </div>
+            <div style={{ padding: '32px 24px', fontSize: '13px', color: '#aaa' }}>Loading...</div>
           ) : stores.length === 0 ? (
-            <div
-              style={{
-                padding: '32px 24px',
-                fontSize: '11px',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: '#999',
-              }}
-            >
-              No stores yet. Add the first one.
-            </div>
+            <div style={{ padding: '32px 24px', fontSize: '13px', color: '#aaa' }}>No stores yet. Add the first one.</div>
           ) : (
             stores.map((store) => {
               const isSelected = store.id === selectedId
@@ -164,60 +109,54 @@ export default function Home() {
                   onClick={() => setSelectedId(store.id)}
                   style={{
                     padding: '16px 20px',
-                    borderBottom: '1px solid #e0e0e0',
                     cursor: 'pointer',
-                    borderLeft: isSelected ? '3px solid #000' : '3px solid transparent',
-                    background: isSelected ? '#f5f5f5' : '#fff',
-                    transition: 'background 0.1s',
+                    background: isSelected ? '#f7f7f7' : '#fff',
+                    borderRadius: '0',
+                    transition: 'background 0.15s',
+                    borderBottom: '1px solid #f2f2f2',
                   }}
                 >
-                  <div
-                    style={{
-                      fontSize: '10px',
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
-                      color: '#888',
-                      marginBottom: '3px',
-                    }}
-                  >
+                  <div style={{ fontSize: '11px', color: '#aaa', marginBottom: '3px', fontWeight: 500 }}>
                     {store.category}
                   </div>
-                  <div
-                    style={{
-                      fontSize: '13px',
-                      fontWeight: 700,
-                      letterSpacing: '0.04em',
-                      textTransform: 'uppercase',
-                      marginBottom: '3px',
-                    }}
-                  >
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a', marginBottom: '3px' }}>
                     {store.name}
                   </div>
-                  <div
-                    style={{
-                      fontSize: '11px',
-                      color: '#666',
-                      marginBottom: store.tags?.length ? '8px' : '0',
-                    }}
-                  >
-                    {store.neighborhood ? `${store.neighborhood} — ` : ''}{store.address}
+                  <div style={{ fontSize: '12px', color: '#bbb', marginBottom: store.tags?.length ? '8px' : '0' }}>
+                    {store.neighborhood ? `${store.neighborhood} · ` : ''}{store.address}
                   </div>
                   {store.tags && store.tags.length > 0 && (
-                    <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', marginBottom: (store.website || store.instagram) ? '8px' : '0' }}>
                       {store.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          style={{
-                            fontSize: '9px',
-                            letterSpacing: '0.08em',
-                            textTransform: 'uppercase',
-                            padding: '2px 5px',
-                            border: '1px solid #000',
-                          }}
-                        >
+                        <span key={tag} style={{
+                          fontSize: '10px',
+                          fontWeight: 500,
+                          padding: '2px 8px',
+                          background: '#f4f4f4',
+                          color: '#888',
+                          borderRadius: '20px',
+                        }}>
                           {tag}
                         </span>
                       ))}
+                    </div>
+                  )}
+                  {(store.website || store.instagram) && (
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      {store.website && (
+                        <a href={store.website} target="_blank" rel="noopener noreferrer"
+                          style={{ fontSize: '11px', color: '#888', textDecoration: 'none' }}
+                          onClick={(e) => e.stopPropagation()}>
+                          🌐 Website
+                        </a>
+                      )}
+                      {store.instagram && (
+                        <a href={`https://instagram.com/${store.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer"
+                          style={{ fontSize: '11px', color: '#888', textDecoration: 'none' }}
+                          onClick={(e) => e.stopPropagation()}>
+                          📷 {store.instagram.startsWith('@') ? store.instagram : `@${store.instagram}`}
+                        </a>
+                      )}
                     </div>
                   )}
                 </div>
@@ -228,10 +167,7 @@ export default function Home() {
       </div>
 
       {showModal && (
-        <AddStoreModal
-          onClose={() => setShowModal(false)}
-          onAdded={handleAdded}
-        />
+        <AddStoreModal onClose={() => setShowModal(false)} onAdded={handleAdded} />
       )}
     </div>
   )

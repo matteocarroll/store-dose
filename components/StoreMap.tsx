@@ -75,10 +75,10 @@ export default function StoreMap({ stores, selectedId, onSelectStore }: Props) {
           html: `<div style="
             width: ${isSelected ? 14 : 10}px;
             height: ${isSelected ? 14 : 10}px;
-            background: #000;
+            background: #1a1a1a;
             border-radius: 50%;
-            border: ${isSelected ? '2px solid #fff' : '1.5px solid #000'};
-            box-shadow: ${isSelected ? '0 0 0 2px #000' : 'none'};
+            border: ${isSelected ? '2px solid #fff' : 'none'};
+            box-shadow: ${isSelected ? '0 0 0 2.5px #1a1a1a' : '0 1px 4px rgba(0,0,0,0.25)'};
           "></div>`,
           iconSize: [isSelected ? 14 : 10, isSelected ? 14 : 10],
           iconAnchor: [isSelected ? 7 : 5, isSelected ? 7 : 5],
@@ -89,14 +89,19 @@ export default function StoreMap({ stores, selectedId, onSelectStore }: Props) {
         const popupContent = document.createElement('div')
         popupContent.style.cssText = 'padding: 16px; min-width: 220px; font-family: Arial, Helvetica, sans-serif;'
         popupContent.innerHTML = `
-          <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#666; margin-bottom:4px;">${store.category}</div>
-          <div style="font-size:15px; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:2px;">${store.name}</div>
-          <div style="font-size:12px; color:#666; margin-bottom:8px;">${store.neighborhood} — ${store.address}</div>
+          <div style="font-size:11px; font-weight:500; color:#aaa; margin-bottom:4px;">${store.category}</div>
+          <div style="font-size:15px; font-weight:700; color:#1a1a1a; margin-bottom:3px;">${store.name}</div>
+          <div style="font-size:12px; color:#bbb; margin-bottom:10px;">${store.neighborhood ? store.neighborhood + ' · ' : ''}${store.address}</div>
           ${store.tags && store.tags.length > 0 ? `
-            <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:8px;">
-              ${store.tags.map(t => `<span style="font-size:10px; letter-spacing:0.08em; text-transform:uppercase; padding:2px 6px; border:1.5px solid #000;">${t}</span>`).join('')}
+            <div style="display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px;">
+              ${store.tags.map(t => `<span style="font-size:10px; font-weight:500; padding:2px 8px; background:#f4f4f4; color:#888; border-radius:20px;">${t}</span>`).join('')}
             </div>` : ''}
-          ${store.note ? `<div style="font-size:12px; font-style:italic; border-top:1px solid #e0e0e0; padding-top:8px; margin-top:4px;">"${store.note}"</div>` : ''}
+          ${store.note ? `<div style="font-size:12px; color:#888; font-style:italic; border-top:1px solid #f2f2f2; padding-top:10px; margin-top:2px;">"${store.note}"</div>` : ''}
+          ${(store.website || store.instagram) ? `
+            <div style="display:flex; gap:12px; margin-top:10px; padding-top:10px; border-top:1px solid #f2f2f2;">
+              ${store.website ? `<a href="${store.website}" target="_blank" style="font-size:11px; color:#888; text-decoration:none;">🌐 Website</a>` : ''}
+              ${store.instagram ? `<a href="https://instagram.com/${store.instagram.replace('@','')}" target="_blank" style="font-size:11px; color:#888; text-decoration:none;">📷 ${store.instagram.startsWith('@') ? store.instagram : '@' + store.instagram}</a>` : ''}
+            </div>` : ''}
         `
 
         marker.bindPopup(L.popup({ closeButton: true, maxWidth: 300 }).setContent(popupContent))
@@ -131,7 +136,7 @@ export default function StoreMap({ stores, selectedId, onSelectStore }: Props) {
       style={{
         width: '100%',
         height: '100%',
-        border: '1.5px solid #000',
+        border: 'none',
       }}
     />
   )

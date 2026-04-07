@@ -11,6 +11,8 @@ export type Store = {
   lng: number
   tags: string[]
   note: string
+  website: string | null
+  instagram: string | null
   created_at: string
 }
 
