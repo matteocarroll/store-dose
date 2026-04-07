@@ -165,9 +165,7 @@ export default function AddStoreModal({ onClose, onAdded }: Props) {
             placeholder="Type a store name or address..."
             autoComplete="off"
           />
-          <p style={{ fontSize: '11px', color: '#ccc', marginTop: '5px' }}>
-            {(window as any).google?.maps?.places ? 'Powered by Google Places' : 'Add your Google Maps API key to enable autocomplete'}
-          </p>
+          <p style={{ fontSize: '11px', color: '#ccc', marginTop: '5px' }}>Powered by Google Places</p>
         </div>
 
         <form onSubmit={handleSubmit}>
