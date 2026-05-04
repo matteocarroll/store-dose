@@ -182,7 +182,6 @@ export default async function BrandsPage() {
                     )}
                     <span style={{ fontSize: '11px', color: '#aaa' }}>{totalCount} brands</span>
                     <a href={store.url} target="_blank" rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
                       style={{ fontSize: '14px', color: '#ccc', textDecoration: 'none' }}>↗</a>
                   </div>
                 </summary>
