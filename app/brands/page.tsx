@@ -168,36 +168,37 @@ export default async function BrandsPage() {
             const totalCount = store.brands.length + (store.removedBrands || []).length
 
             return (
-              <div key={store.name} style={{ background: '#fff', border: '1px solid #ebebeb', borderRadius: '8px', padding: '20px' }}>
+              <details key={store.name} style={{ background: '#fff', border: '1px solid #ebebeb', borderRadius: '8px', padding: '20px' }}>
 
-                {/* Store header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                {/* Clickable summary = store header */}
+                <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', cursor: 'pointer', listStyle: 'none' }}>
                   <div>
                     <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a' }}>{store.name}</div>
                     <div style={{ fontSize: '11px', color: '#aaa', marginTop: '2px' }}>{store.location}</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+                    {(store.newBrands || []).length > 0 && (
+                      <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#1a6b3c', display: 'inline-block' }} title="New brands this month" />
+                    )}
                     <span style={{ fontSize: '11px', color: '#aaa' }}>{totalCount} brands</span>
                     <a href={store.url} target="_blank" rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
                       style={{ fontSize: '14px', color: '#ccc', textDecoration: 'none' }}>↗</a>
                   </div>
-                </div>
+                </summary>
 
-                {/* Brand list */}
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {/* Brand list — hidden until expanded */}
+                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '12px', borderTop: '1px solid #f2f2f2', paddingTop: '4px' }}>
 
                   {/* New brands — floated to top with green dot */}
-                  {(store.newBrands || []).map((brand: string, i: number) => (
+                  {(store.newBrands || []).map((brand: string) => (
                     <div key={`new-${brand}`} style={{
                       fontSize: '13px', padding: '5px 0',
                       borderBottom: '1px solid #f2f2f2',
                       display: 'flex', alignItems: 'center', gap: '7px',
                       color: '#1a6b3c', fontWeight: 500,
                     }}>
-                      <span style={{
-                        width: '7px', height: '7px', borderRadius: '50%',
-                        background: '#1a6b3c', flexShrink: 0,
-                      }} title="New this month" />
+                      <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#1a6b3c', flexShrink: 0 }} title="New this month" />
                       {brand}
                     </div>
                   ))}
@@ -221,10 +222,7 @@ export default async function BrandsPage() {
                       display: 'flex', alignItems: 'center', gap: '7px',
                       color: '#bbb',
                     }}>
-                      <span style={{
-                        width: '7px', height: '7px', borderRadius: '50%',
-                        background: '#e08080', flexShrink: 0,
-                      }} title="No longer carried" />
+                      <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#e08080', flexShrink: 0 }} title="No longer carried" />
                       <s style={{ textDecorationColor: '#ccc' }}>{brand}</s>
                     </div>
                   ))}
@@ -233,7 +231,7 @@ export default async function BrandsPage() {
                 <div style={{ fontSize: '11px', color: '#ccc', marginTop: '12px' }}>
                   Updated {formatDate(store.updated)}
                 </div>
-              </div>
+              </details>
             )
           })}
         </div>
